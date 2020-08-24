@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -21,25 +22,32 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    viewBinding {
+        enabled true
+    }
+
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+//    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(":repository")
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
-    //dagger
-    implementation deps.dagger.core
+    implementation deps.androidx.recyclerview
+    implementation deps.androidx.constraintlayout
 
-    //githubapi - api = cada projeto que depender de repository vai poder ter acesso a githubapi
-    api project(":githubapi")
+    // lifecycle: livedata and viewmodel
+    implementation deps.androidx.viewmodel
+    implementation deps.androidx.livedata
+
+    implementation deps.dagger.core
+    kapt deps.dagger.compiler
 
     testImplementation 'junit:junit:4.12'
-
-    // google truth
-    testImplementation deps.truth
-
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 

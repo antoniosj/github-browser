@@ -22,19 +22,28 @@ allprojects {
 }
 
 ext.versions = [
-        "compileSdk": 29,
-        "minSdk"    : 23,
-        "targetSdk" : 29,
-        "dagger"    : "2.26",
-        "truth"     : "1.0.1"
+        "compileSdk"      : 29,
+        "minSdk"          : 23,
+        "targetSdk"       : 29,
+        "dagger"          : "2.26",
+        "truth"           : "1.0.1",
+        "recyclerview"    : "1.1.0",
+        "constraintlayout": "2.0.0",
+        "lifecycle"       : "2.2.0"
 ]
 
 ext.deps = [
-        "dagger": [
-                "core": "com.google.dagger:dagger:${versions.dagger}",
+        "androidx": [
+                "constraintlayout": "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}",
+                "recyclerview"    : "androidx.recyclerview:recyclerview:${versions.recyclerview}",
+                "livedata"        : "androidx.lifecycle:lifecycle-livedata-ktx:${versions.lifecycle}",
+                "viewmodel"       : "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}"
+        ],
+        "dagger"  : [
+                "core"    : "com.google.dagger:dagger:${versions.dagger}",
                 "compiler": "com.google.dagger:dagger-compiler:${versions.dagger}"
         ],
-        "truth": "com.google.truth:truth:${versions.truth}"
+        "truth"   : "com.google.truth:truth:${versions.truth}"
 ]
 
 task clean(type: Delete) {

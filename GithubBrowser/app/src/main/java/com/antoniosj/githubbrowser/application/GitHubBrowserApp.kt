@@ -1,6 +1,7 @@
 package com.antoniosj.githubbrowser.application
 
 import android.app.Application
+import com.antoniosj.githubbrowser.appcomponent.DaggerApplicationComponent
 import com.antoniosj.githubbrowser.appdeps.ApplicationDeps
 import com.antoniosj.githubbrowser.appdeps.HasApplicationDeps
 

@@ -33,6 +33,8 @@ dependencies {
 
     // app deps
     implementation project(":appdeps")
+    // app deps
+    implementation project(":appcomponent")
     // home
     implementation project(":home")
     //github api

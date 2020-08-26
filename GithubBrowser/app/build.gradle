@@ -33,10 +33,15 @@ dependencies {
 
     // app deps
     implementation project(":appdeps")
+    // home
+    implementation project(":home")
     //github api
     implementation project(":githubapi")
     //repository
     implementation project(":repository")
+
+    implementation deps.androidx.fragment
+
     //dagger
     implementation deps.dagger.core
     kapt deps.dagger.compiler

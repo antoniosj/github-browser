@@ -2,8 +2,11 @@ package com.antoniosj.githubbrowser.home
 
 import com.antoniosj.githubbrowser.appdeps.ApplicationDeps
 import com.antoniosj.githubbrowser.appdeps.applicationDeps
+import com.antoniosj.githubbrowser.di.component.getComponent
+import com.antoniosj.githubbrowser.di.scope.ScreenScope
 import dagger.Component
 
+@ScreenScope
 @Component(dependencies = [ApplicationDeps::class], modules = [HomeModule::class])
 interface HomeComponent {
 
@@ -16,5 +19,8 @@ interface HomeComponent {
 }
 
 fun HomeFragment.inject() {
-    DaggerHomeComponent.factory().create(requireContext().applicationDeps()).inject(this)
+    //getComponent funciona aqui porque tem um fragment e o fragment armazena vm.
+    getComponent {
+        DaggerHomeComponent.factory().create(requireContext().applicationDeps())
+    }.inject(this)
 }

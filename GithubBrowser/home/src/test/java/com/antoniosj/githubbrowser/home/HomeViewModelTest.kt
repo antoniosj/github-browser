@@ -6,8 +6,12 @@ import com.antoniosj.githubbrowser.githubapi.model.RepoApiModel
 import com.antoniosj.githubbrowser.githubapi.model.UserApiModel
 import com.antoniosj.githubbrowser.home.repolist.RepoItem
 import com.antoniosj.githubbrowser.repository.AppRepository
+import com.antoniosj.githubbrowser.testing.app.githubapi.FakeGitHubApi
 import org.junit.Before
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.invoke
+import kotlinx.coroutines.test.setMain
 
 import org.junit.Assert.*
 import org.junit.Rule
@@ -36,7 +40,10 @@ class HomeViewModelTest {
 
     @Before
     fun setUp() {
-        val appRepository = AppRepository(FakeGitHubApi())
+        Dispatchers.setMain(Dispatchers.Unconfined)
+        val appRepository = AppRepository(FakeGitHubApi().apply {
+            repos = listOf(fakeRepoApiModel)
+        })
         viewStateValues = mutableListOf()
 
         viewModel = HomeViewModel(appRepository)
@@ -50,7 +57,7 @@ class HomeViewModelTest {
             repos = listOf(
                 RepoItem(
                     name = fakeRepoApiModel.name,
-                    description = fakeRepoApiModel.description,
+                    description = fakeRepoApiModel.description ?: "",
                     starsCount = fakeRepoApiModel.stargazersCount,
                     forkCount = fakeRepoApiModel.forksCount
                 )
@@ -59,12 +66,4 @@ class HomeViewModelTest {
 
         assertThat(viewStateValues[0]).isEqualTo(expectedState)
     }
-}
-
-// Pode usar mockito no lugar de criar um fake
-private class FakeGitHubApi: GitHubApi {
-    override fun getTopRepositories(): List<RepoApiModel> {
-        return listOf(fakeRepoApiModel)
-    }
-
 }

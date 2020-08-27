@@ -55,6 +55,9 @@ dependencies {
     implementation deps.androidx.viewmodel
     implementation deps.androidx.livedata
 
+    //coroutines
+    implementation deps.coroutines.android
+    //dagger
     implementation deps.dagger.core
     kapt deps.dagger.compiler
 
@@ -63,6 +66,9 @@ dependencies {
     androidTestImplementation project(":testing:app")
     testImplementation  deps.androidx.archtesting
     testImplementation  deps.truth
+    //coroutines test
+    testImplementation deps.coroutines.test
+    testImplementation project(":testing:app")
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

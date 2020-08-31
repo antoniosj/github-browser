@@ -26,6 +26,11 @@ android {
     viewBinding {
         enabled true
     }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
 }
 
 dependencies {
@@ -36,6 +41,9 @@ dependencies {
 
     implementation project(":appdeps")
     implementation project(":di")
+
+    //coil
+    implementation deps.coil
 
     implementation deps.androidx.constraintlayout
     implementation deps.androidx.fragment

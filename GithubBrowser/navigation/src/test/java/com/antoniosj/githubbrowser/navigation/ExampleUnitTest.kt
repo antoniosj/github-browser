@@ -1,4 +1,4 @@
-package com.antoniosj.githubbrowser.details
+package com.antoniosj.githubbrowser.navigation
 
 import org.junit.Test
 

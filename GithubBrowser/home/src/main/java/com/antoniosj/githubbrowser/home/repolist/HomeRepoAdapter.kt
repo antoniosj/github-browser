@@ -1,11 +1,14 @@
 package com.antoniosj.githubbrowser.home.repolist
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.antoniosj.githubbrowser.home.databinding.RepoItemBinding
 
-class HomeRepoAdapter: RecyclerView.Adapter<HomeRepoAdapter.RepoItemViewHolder>() {
+class HomeRepoAdapter(
+    private val onRepoSelected: (repoOwner: String, repoName: String) -> Unit
+): RecyclerView.Adapter<HomeRepoAdapter.RepoItemViewHolder>() {
 
     private val dataList: MutableList<RepoItem> = mutableListOf()
 
@@ -17,7 +20,7 @@ class HomeRepoAdapter: RecyclerView.Adapter<HomeRepoAdapter.RepoItemViewHolder>(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepoItemViewHolder {
         val binding = RepoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RepoItemViewHolder(binding)
+        return RepoItemViewHolder(binding, onRepoSelected)
     }
 
     override fun getItemCount(): Int {
@@ -28,10 +31,23 @@ class HomeRepoAdapter: RecyclerView.Adapter<HomeRepoAdapter.RepoItemViewHolder>(
         holder.bind(dataList[position])
     }
 
-    class RepoItemViewHolder(private val binding: RepoItemBinding)
+    class RepoItemViewHolder(private val binding: RepoItemBinding,
+                             onRepoSelected: (repoOwner: String, repoName: String) -> Unit
+    )
         : RecyclerView.ViewHolder(binding.root) {
 
+        private var repoItem: RepoItem? = null
+
+        init {
+            itemView.setOnClickListener {
+                repoItem?.let {
+                    repo -> onRepoSelected(repo.ownerName, repo.name)
+                }
+            }
+        }
+
         fun bind(repoItem: RepoItem) {
+            this.repoItem = repoItem
             binding.tvRepoName.text = repoItem.name
             binding.tvRepoDescription.text = repoItem.description
             binding.tvStarsCount.text = "${repoItem.starsCount}"

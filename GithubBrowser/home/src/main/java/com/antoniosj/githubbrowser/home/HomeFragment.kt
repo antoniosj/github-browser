@@ -37,12 +37,12 @@ class HomeFragment: Fragment() {
         //return super.onCreateView(inflater, container, savedInstanceState)
         val binding = ScreenHomeBinding.inflate(inflater, container, false)
         binding.rvRepoList.apply {
-            adapter = HomeRepoAdapter()
+            adapter = HomeRepoAdapter(homeViewModel::onRepoSelected)
             layoutManager = LinearLayoutManager(context) // this = view, not fragment
             addItemDecoration(DividerItemDecoration(context,DividerItemDecoration.VERTICAL))
         }
 
-        homeViewModel.viewStateUpdates.observe(this, Observer { state ->
+        homeViewModel.viewStateUpdates.observe(viewLifecycleOwner, Observer { state ->
             when (state) {
                 is HomeViewStateLoading -> handleLoadingState(binding)
                 is HomeViewStateLoaded -> handleLoadedState(state, binding)
